@@ -1,6 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formulario from "./src/components/Formulario";
 import { Paciente } from "./src/types";
@@ -21,17 +29,21 @@ export default function App() {
         <Text style={styles.tituloBold}>Veterinaria</Text>
       </Text>
 
-
       <Pressable style={styles.btnNuevaCita} onPress={nuevaCitaHandler}>
         <Text style={styles.btnTextNuevaCita}>Nueva cita</Text>
       </Pressable>
-     
+
       {pacientes.length === 0 ? (
         <Text style={styles.noPacientes}>No ahy pacientes aun</Text>
       ) : (
-        <FlatList data={pacientes} keyExtractor={(item) => item.id } renderItem={()=>{
-          return <PacienteComponent ></PacienteComponent>
-        }}/>
+        <FlatList
+        style={styles.listado}
+          data={pacientes}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={() => {
+            return <PacienteComponent item={pacientes[0]} />;
+          }}
+        />
       )}
 
       <Formulario
@@ -73,13 +85,15 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontWeight: "900",
   },
-  noPacientes:{
-    textAlign:'center',
-    marginTop:30,
-    fontSize:24,
-    fontWeight:'600'
+  noPacientes: {
+    textAlign: "center",
+    marginTop: 30,
+    fontSize: 24,
+    fontWeight: "600",
   },
-  pacientes:{
-    
-  }
+  listado:{
+    marginTop:50,
+    marginHorizontal:30
+  },
+  pacientes: {},
 });
