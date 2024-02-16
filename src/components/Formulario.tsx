@@ -10,22 +10,65 @@ import {
   View,
   ScrollView,
   Pressable,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Paciente } from "../types"
+
 
 const Formulario = ({
   modalVisible,
   setModalVisible,
+  pacientes,
+  setPacientes,
 }: {
   modalVisible: boolean;
-  setModalVisible: (a:boolean) => void;
+  setModalVisible: (a: boolean) => void; // Aqui estou tipando a função setModalVisible, dizendo que o tipo do parametro que será passado é um booleano e a função retorna um void.
+  pacientes: Paciente[];
+  setPacientes: (
+    pacientes:Paciente[]
+  ) => void;
 }) => {
+  // Aqui estou fazendo o destructuring do estado paciente que estou criando e fazendo praticamente a mesma coisa para o restante dos estados.
   const [paciente, setPaciente] = useState("");
-  const [nombrePropietario, setProprietario] = useState("");
+  const [proprietario, setProprietario] = useState("");
   const [email, setEmail] = useState("");
   const [telefono, setTelefono] = useState("");
   const [fecha, setFecha] = useState(new Date());
   const [sintomas, setSintomas] = useState("");
+
+  const handleCita = () => {
+    //VALIDAR
+
+    //Aqui estou usando o metodo de arrays includes para validar, ele verifica cada item dentro do array e opera conforme a confição que eu passar para ele dentro dos parenteses.Neste caso estou passando uma string vazia. Caso seja uma string vazia , vai retornar o Alerta.
+    if ([paciente, proprietario, email, fecha, sintomas].includes("")) {
+      Alert.alert("Error", "Todos los campos son obligatorios");
+      return;
+    }
+    console.log("Agregando paciente...");
+
+    // Aqui estou ciando um objeto com os dados do novo paciente.
+    const nuevoPaciente = {
+      id:Date.now(),
+      paciente,
+      proprietario,
+      email,
+      telefono,
+      fecha,
+      sintomas,
+    }
+
+    setPacientes([...pacientes, nuevoPaciente]); // Aqui estou dizendo para pegar o estado atual do pacientes e adicionar um novo elemento ao array que neste caso é o nuevoPaciente o quel é um objeto.
+    setModalVisible(false) // Aqui estou fecnado o modal 
+
+    // Aqui estou resetando os campos de cada estado, para que possam estar vazios ao reabrir o modal.
+    setPaciente('')
+    setProprietario('')
+    setEmail('')
+    setTelefono('')
+    setFecha(new Date())
+    setSintomas('')
+  };
 
   return (
     <Modal animationType="slide" visible={modalVisible}>
@@ -57,9 +100,9 @@ const Formulario = ({
               placeholder="Nombre Porprietario"
               placeholderTextColor={"#666"}
               style={styles.input}
-              value={nombrePropietario}
+              value={proprietario}
               onChangeText={setProprietario}
-            />
+            /> 
           </View>
           <View style={styles.campo}>
             <Text style={styles.label}>Email Proprietario</Text>
@@ -80,7 +123,7 @@ const Formulario = ({
               style={styles.input}
               keyboardType="number-pad"
               value={telefono}
-              onChangeText={setTelefono}
+              onChangeText={setTelefono} // onChangeText é função de callback que retorna o valor do texto escrito no input
               maxLength={11}
             />
           </View>
@@ -106,13 +149,8 @@ const Formulario = ({
               numberOfLines={4}
             />
           </View>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              console.log(paciente);
-            }}
-          >
-            <Text>Enviar</Text>
+          <Pressable style={styles.btnNuevaCita} onPress={handleCita}>
+            <Text style={styles.btnNuevaCitaTexto}>Agregar paciente</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>
@@ -171,13 +209,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
   },
-  button: {
-    alignSelf: "center",
-    backgroundColor: "white",
-    paddingVertical: 15,
+  btnNuevaCita: {
+    marginHorizontal: 30,
+    marginVertical: 30,
+    backgroundColor: "#F59E0B",
+    padding: 15,
     borderRadius: 10,
-    marginTop: 10,
-    paddingHorizontal: 40,
+  },
+  btnNuevaCitaTexto: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    color: "#5827a4",
   },
 });
 
