@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Formulario from "./src/components/Formulario";
-import { Paciente } from "./src/types";
+import { PacienteType } from "./src/types";
 import PacienteComponent from "./src/components/Paciente";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [pacientes, setPacientes] = useState<PacienteType[]>([]);
 
   const nuevaCitaHandler = () => {
     return setModalVisible(true);
@@ -41,7 +41,7 @@ export default function App() {
           data={pacientes}
           keyExtractor={(item) => item.id.toString()}
           renderItem={() => {
-            return <PacienteComponent item={pacientes[0]} />;
+            return <PacienteComponent item={pacientes[0]} setModalVisible={setModalVisible} />;
           }}
         />
       )}
