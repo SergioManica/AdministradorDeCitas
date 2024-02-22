@@ -13,8 +13,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Paciente } from "../types"
-
+import { PacienteType } from "../types"
 
 const Formulario = ({
   modalVisible,
@@ -24,9 +23,9 @@ const Formulario = ({
 }: {
   modalVisible: boolean;
   setModalVisible: (a: boolean) => void; // Aqui estou tipando a função setModalVisible, dizendo que o tipo do parametro que será passado é um booleano e a função retorna um void.
-  pacientes: Paciente[];
+  pacientes: PacienteType[];
   setPacientes: (
-    pacientes:Paciente[]
+    pacientes:PacienteType[]
   ) => void;
 }) => {
   // Aqui estou fazendo o destructuring do estado paciente que estou criando e fazendo praticamente a mesma coisa para o restante dos estados.

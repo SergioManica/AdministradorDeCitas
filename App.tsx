@@ -37,11 +37,16 @@ export default function App() {
         <Text style={styles.noPacientes}>No ahy pacientes aun</Text>
       ) : (
         <FlatList
-        style={styles.listado}
+          style={styles.listado}
           data={pacientes}
           keyExtractor={(item) => item.id.toString()}
           renderItem={() => {
-            return <PacienteComponent item={pacientes[0]} setModalVisible={setModalVisible} />;
+            return (
+              <PacienteComponent
+                item={pacientes[0]}
+                setModalVisible={setModalVisible}
+              />
+            );
           }}
         />
       )}
@@ -91,9 +96,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
   },
-  listado:{
-    marginTop:50,
-    marginHorizontal:30
+  listado: {
+    marginTop: 50,
+    marginHorizontal: 30,
   },
   pacientes: {},
 });
