@@ -13,7 +13,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PacienteType } from "../types"
+import { PacienteType } from "../types";
 
 const Formulario = ({
   modalVisible,
@@ -24,10 +24,9 @@ const Formulario = ({
   modalVisible: boolean;
   setModalVisible: (a: boolean) => void; // Aqui estou tipando a função setModalVisible, dizendo que o tipo do parametro que será passado é um booleano e a função retorna um void.
   pacientes: PacienteType[];
-  setPacientes: (
-    pacientes:PacienteType[]
-  ) => void;
-}) => {
+  setPacientes: (pacientes: PacienteType[]) => void;
+  paciente:{}
+  }) => {
   // Aqui estou fazendo o destructuring do estado paciente que estou criando e fazendo praticamente a mesma coisa para o restante dos estados.
   const [paciente, setPaciente] = useState("");
   const [proprietario, setProprietario] = useState("");
@@ -35,6 +34,9 @@ const Formulario = ({
   const [telefono, setTelefono] = useState("");
   const [fecha, setFecha] = useState(new Date());
   const [sintomas, setSintomas] = useState("");
+
+    console.log(paciente);
+    
 
   const handleCita = () => {
     //VALIDAR
@@ -48,25 +50,25 @@ const Formulario = ({
 
     // Aqui estou ciando um objeto com os dados do novo paciente.
     const nuevoPaciente = {
-      id:Date.now(),
+      id: Date.now(),
       paciente,
       proprietario,
       email,
       telefono,
       fecha,
       sintomas,
-    }
+    };
 
-    setPacientes([...pacientes, nuevoPaciente]); // Aqui estou dizendo para pegar o estado atual do pacientes e adicionar um novo elemento ao array que neste caso é o nuevoPaciente o quel é um objeto.
-    setModalVisible(false) // Aqui estou fecnado o modal 
+    setPacientes([...pacientes, nuevoPaciente]); // Aqui estou dizendo para pegar o estado atual do pacientes e adicionar um novo elemento ao array que neste caso é o nuevoPaciente e que é um objeto.
+    setModalVisible(false); // Aqui estou fecnado o modal
 
     // Aqui estou resetando os campos de cada estado, para que possam estar vazios ao reabrir o modal.
-    setPaciente('')
-    setProprietario('')
-    setEmail('')
-    setTelefono('')
-    setFecha(new Date())
-    setSintomas('')
+    setPaciente("");
+    setProprietario("");
+    setEmail("");
+    setTelefono("");
+    setFecha(new Date());
+    setSintomas("");
   };
 
   return (
@@ -101,7 +103,7 @@ const Formulario = ({
               style={styles.input}
               value={proprietario}
               onChangeText={setProprietario}
-            /> 
+            />
           </View>
           <View style={styles.campo}>
             <Text style={styles.label}>Email Proprietario</Text>

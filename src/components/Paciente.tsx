@@ -2,7 +2,15 @@ import React from "react";
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import { PacienteType } from "../types";
 
-const Paciente = ({ item, setModalVisible }: { item: { paciente: string; fecha: Date }, setModalVisible: (a: boolean) => void;}) => {
+const Paciente = ({
+  item,
+  setModalVisible,
+  pacienteEditar,
+}: {
+  item: { paciente: string; fecha: Date };
+  setModalVisible: (a: boolean) => void;
+  pacienteEditar: (id: number) => void;
+}) => {
   // aqui estou aplicando destructuring para criar as variaveis paciente, fecha e etc. Segue o exemplo se destructuring:
   // const paciente = paciente.item
   // const fecha = fecha.item
@@ -26,9 +34,13 @@ const Paciente = ({ item, setModalVisible }: { item: { paciente: string; fecha: 
       <Text style={styles.texto}> {paciente}</Text>
       <Text style={styles.fecha}>{formatearFecha({ fecha })}</Text>
       <View style={styles.contenedorBotones}>
-        <Pressable onLongPress={() => { 
-          setModalVisible(true)
-        }} style={[styles.btn, styles.btnEditar]}>
+        <Pressable
+          onLongPress={() => {
+            setModalVisible(true);
+            pacienteEditar;
+          }}
+          style={[styles.btn, styles.btnEditar]}
+        >
           <Text style={styles.btnTexto}>Editar</Text>
         </Pressable>
         <Pressable style={[styles.btn, styles.btnEliminar]}>
@@ -64,25 +76,25 @@ const styles = StyleSheet.create({
     color: "#374151",
   },
   contenedorBotones: {
-    flexDirection:'row',
-    justifyContent:'space-between',
-    marginTop:20
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
   },
   btn: {
-    paddingHorizontal:20,
-    paddingVertical:5,
-    borderRadius:5
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    borderRadius: 5,
   },
   btnEditar: {
-    backgroundColor:'#f59e0b'
+    backgroundColor: "#f59e0b",
   },
   btnEliminar: {
-    backgroundColor:'#ef4444'
+    backgroundColor: "#ef4444",
   },
   btnTexto: {
-    textTransform:'uppercase',
-    fontSize:12,
-    fontWeight:'700',
-    color:'#fff'
+    textTransform: "uppercase",
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#fff",
   },
 });

@@ -17,6 +17,15 @@ import PacienteComponent from "./src/components/Paciente";
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
   const [pacientes, setPacientes] = useState<PacienteType[]>([]);
+  const [paciente, setPaciente] =  useState<PacienteType[]>([]);
+
+  const pacienteEditar = (id: number) => {
+    const pacienteEditar = pacientes.filter((paciente) => {
+      paciente.id === id;
+    });
+    console.log(pacienteEditar);
+    
+  };
 
   const nuevaCitaHandler = () => {
     return setModalVisible(true);
@@ -40,10 +49,11 @@ export default function App() {
           style={styles.listado}
           data={pacientes}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={() => {
+          renderItem={({ item }) => {
             return (
               <PacienteComponent
-                item={pacientes[0]}
+                pacienteEditar={pacienteEditar}
+                item={item}
                 setModalVisible={setModalVisible}
               />
             );
@@ -55,6 +65,7 @@ export default function App() {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         pacientes={pacientes}
+        paciente={paciente}
         setPacientes={setPacientes}
       />
     </SafeAreaView>
